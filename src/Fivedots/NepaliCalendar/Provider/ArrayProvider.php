@@ -148,7 +148,11 @@ class ArrayProvider implements ProviderInterface
 
     public function isValidDate($year, $month, $date)
     {
-        $data = $this->getData($year);
+        try {
+            $data = $this->getData($year);
+        } catch (CalendarException $e) {
+            return false;
+        }
 
         if ($month < 1 || $month > 12) {
             return false;
