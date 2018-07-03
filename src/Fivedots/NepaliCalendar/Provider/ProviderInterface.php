@@ -12,4 +12,8 @@ interface ProviderInterface {
     public function getData($year);
 
     public function isValidDate($year, $month, $date);
+
+    public function getValidRange();
+
+    public function isValidADDate($year, $month, $date);
 }

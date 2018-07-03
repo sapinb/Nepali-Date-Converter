@@ -47,5 +47,18 @@ class ArrayProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->provider->isValidDate(2043,11,31));
     }
 
+    public function testIsValidADDate()
+    {
+        $this->assertTrue($this->provider->isValidADDate(2018, 7, 3));
+        $this->assertTrue($this->provider->isValidADDate(1913, 4, 13));
+        $this->assertTrue($this->provider->isValidADDate(2034, 4, 13));
+    }
 
+    public function testIsValidADDateFail()
+    {
+        $this->assertFalse($this->provider->isValidADDate(2018, 13, 3));
+        $this->assertFalse($this->provider->isValidADDate(2018, 2, 30));
+        $this->assertFalse($this->provider->isValidADDate(1910, 1, 1));
+        $this->assertFalse($this->provider->isValidADDate(2035, 1, 1));
+    }
 }

@@ -166,5 +166,53 @@ class ArrayProvider implements ProviderInterface
         return true;
     }
 
+    public function getValidRange()
+    {
+        return [
+            'ad_min' => [
+                'year' => 1913,
+                'month' => 4,
+                'date' => 13,
+            ],
+            'ad_max' => [
+                'year' => 2034,
+                'month' => 4,
+                'date' => 13,
+            ],
+            'bs_min' => [
+                'year' => 1970,
+                'month' => 1,
+                'date' => 1,
+            ],
+            'bs_max' => [
+                'year' => 2090,
+                'month' => 12,
+                'date' => 30,
+            ],
+        ];
+    }
 
+    protected function _validAdRange()
+    {
+        return [
+            \DateTimeImmutable::createFromFormat('Y-m-d', '1913-04-13'),
+            \DateTimeImmutable::createFromFormat('Y-m-d', '2034-04-13'),
+        ];
+    }
+
+    public function isValidADDate($year, $month, $date)
+    {
+        $date = \DateTimeImmutable::createFromFormat('Y-m-d', "$year-$month-$date");
+        if (!$date || \DateTimeImmutable::getLastErrors()['warning_count'] > 0) {
+            // invalid date
+            return false;
+        }
+
+        list($min, $max) = $this->_validAdRange();
+
+        if ($date < $min || $date > $max) {
+            return false;
+        }
+        return true;
+    }
 }
